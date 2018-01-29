@@ -10,12 +10,13 @@ class HttpsRedirect extends React.Component {
   }
 
   render() {
-    const { force } = this.props;
+    const { force, skip } = this.props;
     if (
       typeof window !== 'undefined' &&
       window.location &&
       window.location.protocol === 'http:' &&
-      (!this.isLocalHost(window.location.hostname) || force)
+      (!this.isLocalHost(window.location.hostname) || force) &&
+      !skip
     ) {
       window.location.href = window.location.href.replace(/^http(?!s)/, 'https');
     }
@@ -31,6 +32,7 @@ class HttpsRedirect extends React.Component {
 HttpsRedirect.propTypes = {
   children: PropTypes.node,
   force: PropTypes.bool,
+  skip: PropTypes.bool,
 };
 
 export default HttpsRedirect;
